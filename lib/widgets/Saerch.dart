@@ -8,7 +8,15 @@ class MySearch extends SearchDelegate {
   MovieController controller = Get.put(MovieController());
   @override
   ThemeData appBarTheme(BuildContext context) {
-    return Theme.of(context).copyWith();
+    return Theme.of(context).copyWith(
+        hintColor: Colors.red,
+        textTheme: const TextTheme(
+            headline6: TextStyle(
+                color: Colors.red, fontSize: 18, fontWeight: FontWeight.bold)),
+        appBarTheme: const AppBarTheme(
+          color: Colors.transparent,
+        ),
+        scaffoldBackgroundColor: Colors.black);
   }
 
   @override
@@ -25,11 +33,21 @@ class MySearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    print(controller.list);
-    if (query == 'your') {
-      return MovieList(movies: controller.list);
-    }
-    return Container();
+    return FutureBuilder(
+        future: controller.getMovies(query),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            print('LIIISTTT${snapshot}');
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.red),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.only(top: 14),
+              child: MovieList(movies: controller.list),
+            );
+          }
+        });
   }
 
   @override

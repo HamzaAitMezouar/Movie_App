@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:movieapp/pages/Movie_detail.dart';
 
 class MovieList extends StatelessWidget {
   const MovieList({
@@ -21,6 +23,12 @@ class MovieList extends StatelessWidget {
               height: 200,
               width: 200,
               child: InkWell(
+                onTap: (() => Get.to(MovieDetail(
+                    image: 'https://image.tmdb.org/t/p/w400' +
+                        movies[index]['poster_path'],
+                    title: movies[index]['title'],
+                    name: movies[index]['original_name'],
+                    overview: movies[index]['overview']))),
                 // ignore: prefer_interpolation_to_compose_strings
                 child: Column(
                   children: [

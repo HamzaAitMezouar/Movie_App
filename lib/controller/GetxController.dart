@@ -5,20 +5,20 @@ import 'package:tmdb_api/tmdb_api.dart';
 class MovieController extends GetxController {
   //var loading = true.obs;
   List list = [].obs;
-  String q = '';
+  //String q = '';
 
   // final apiKey = '2f4dc6d56ff72989d31348ef2578680b';
   // final apiToken =
   //  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZjRkYzZkNTZmZjcyOTg5ZDMxMzQ4ZWYyNTc4NjgwYiIsInN1YiI6IjYyODNiODMyZWM0NTUyMTAzMmE5YjdmMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RXzEniM-hq8DR2EFa5FEKVeTHwkNQnZzhoRK-LE1KBw';
 
   @override
-  void onInit() {
+  /* void onInit() {
     // TODO: implement onInit
     super.onInit();
     getMovies();
-  }
+  }*/
 
-  getMovies() async {
+  getMovies(String query) async {
     const apiKey = '2f4dc6d56ff72989d31348ef2578680b';
     const apiToken =
         'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyZjRkYzZkNTZmZjcyOTg5ZDMxMzQ4ZWYyNTc4NjgwYiIsInN1YiI6IjYyODNiODMyZWM0NTUyMTAzMmE5YjdmMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RXzEniM-hq8DR2EFa5FEKVeTHwkNQnZzhoRK-LE1KBw';
@@ -26,10 +26,12 @@ class MovieController extends GetxController {
     TMDB tmdbrequest = TMDB(ApiKeys(apiKey, apiToken),
         logConfig: const ConfigLogger(showLogs: true, showErrorLogs: true));
 
-    Map searchmap = await tmdbrequest.v3.search.queryMovies('your');
-    print(searchmap);
-    list = searchmap['results'];
+    Map searchmap = await tmdbrequest.v3.search.queryMovies(query);
+
+    return list = searchmap['results'];
   }
+
+  // get query => q;
   /*  getMovies() async {
     try {
       TMDB tmdbrequest = TMDB(ApiKeys(apiKey, apiToken),
